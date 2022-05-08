@@ -1,29 +1,37 @@
+class Nodo():
+    def __init__(self, dato=None, next=None):
+        self.dato=dato
+        self.next=next
+
 class Cola():
     def __init__(self):
-        self.cola=[]
-        self.size=0
+        self.len_cola=0
+        self.front=None
+        self.rear=None
 
     def empty(self):
-        return len(self.cola) == 0
+        return self.len_cola == 0
 
     def enqueue(self, dato):
-        self.cola.append(dato)
-        self.size+=1
+        nodo=Nodo(dato)
+        nodo.next=None
+        if self.len_cola == 0:
+            self.front=self.rear=nodo
+        else:
+            rear=self.rear
+            rear.next=nodo
+            self.rear=nodo
+        self.len_cola+=1
+
 
     def dequeue(self):
-        if self.empty():
-            print("La cola está vacía")
-        else:
-            self.cola=[self.cola[i] for i in range(1,self.size)]
-            self.size-=1
+        dato=self.front.dato
+        self.front=self.front.next
+        self.len_cola -= 1
+        if self.len_cola==0:
+            self.rear=None
+        return dato
 
-    def show(self):
-        n=self.size-1
-        while n>-1:
-            print("[%d]  =>  %d"%(n,self.cola[n]))
 
     def front(self):
-        if self.empty():
-            print("Cola vacía")
-        else:
-            print(self.cola[0])
+        return self.front.dato
