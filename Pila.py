@@ -8,7 +8,7 @@ class Pila():
         self.top=None
 
     def push(self, dato):
-        newp=Nodo()
+        newp=Nodo(dato)
         newp.next=self.top
         top=newp
 
