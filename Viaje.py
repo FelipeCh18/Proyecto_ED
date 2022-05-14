@@ -23,6 +23,4 @@ class Viaje():
                 min_distancia=viajes[i][2]
         return min_distancia
 
-viajes=[]
-
 
