@@ -1,0 +1,50 @@
+from tkinter import *
+raiz = Tk()
+raiz.title("MovilizateUN")
+raiz.resizable(False,False)
+raiz.geometry("360x640")
+
+#para cuadros de texto
+arriba=Frame()
+arriba.config(width="360", height="65", bg="#466b3f")
+arriba.place(x=0, y=0)
+
+#para el mapa
+centro=Frame()
+centro.config(width="360", height="550",bg="white")
+centro.place(x=0, y=65)
+
+#Texto en el centro
+welcome=Label(centro, text="¡Bienvenidx! Ingresa tu edificio de origen\ny de destino para iniciar el viaje", font="Candara, 20",bg='white')
+welcome.place(x=0, y=200)
+
+#Entradas
+origen=StringVar()
+destino=StringVar()
+
+#Entradas de destino y origen
+origin=Label(arriba,text="Desde:", font="Candara, 13",fg="white", bg="#466b3f")
+origin.place(x=25, y=4)
+entrada1=Entry(arriba,textvariable=origen)
+entrada1.place(x=100,y=4)
+destiny=Label(arriba,text="Hasta:", font="Candara 13", fg="white", bg="#466b3f")
+destiny.place(x=25, y=35)
+entrada2=Entry(arriba, textvariable=destino)
+entrada2.place(x=100, y=35)
+
+#Extrae info y la retorna
+def crearViaje():
+    desde=origen.get()
+    hasta=destino.get()
+    return desde,hasta
+
+#logo
+foto_logo =PhotoImage(file="main/logo1.gif")
+logo=Label(arriba, image=foto_logo, bg="#466b3f")
+logo.place(x=300, y=4)
+
+#iniciar viaje
+inViaje=Button(centro, text="Iniciar Viaje", command="crearViaje", bg="white")
+inViaje.place(x=20, y=500)
+
+raiz.mainloop()
