@@ -1,8 +1,16 @@
 from tkinter import *
+import time
+from tkinter.ttk import Notebook
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
 raiz = Tk()
 raiz.title("MovilizateUN")
 raiz.resizable(False,False)
 raiz.geometry("360x640")
+
+notebook=Notebook(raiz)
+notebook.grid()
 
 #para cuadros de texto
 arriba=Frame()
@@ -11,12 +19,17 @@ arriba.place(x=0, y=0)
 
 #para el mapa
 centro=Frame()
-centro.config(width="360", height="550",bg="white")
+centro.config(width="360", height="510",bg="white")
 centro.place(x=0, y=65)
 
+#para los botones
+abajo=Frame()
+abajo.config(width="360",height="65", bg="#466b3f")
+abajo.place(x=0, y=575)
+
 #Texto en el centro
-welcome=Label(centro, text="¡Bienvenidx! Ingresa tu edificio de origen\ny de destino para iniciar el viaje", font="Candara, 20",bg='white')
-welcome.place(x=0, y=200)
+welcome=Label(centro, text="¡Bienvenidx! Ingresa tu edificio de origen\ny de destino para iniciar el viaje", font="Candara, 20",bg='white', fg="black")
+welcome.place(x=0, y=220)
 
 #Entradas
 origen=StringVar()
@@ -44,7 +57,26 @@ logo=Label(arriba, image=foto_logo, bg="#466b3f")
 logo.place(x=300, y=4)
 
 #iniciar viaje
-inViaje=Button(centro, text="Iniciar Viaje", command="crearViaje", bg="white")
-inViaje.place(x=20, y=500)
+inViaje=Button(abajo, text="Iniciar Viaje", command="crearViaje", bg="#466b3f", fg="black")
+inViaje.place(x=20, y=15)
+
+def abrirHist():
+    welcome.destroy()
+    inViaje.destroy()
+    historial.destroy()
+    volver.place(x=20, y=15)
+    #añade los viajes y los muestra en pantalla
+
+#boton historial
+historial=Button(abajo, text="Historial", command="abrirHist()", bg="#466b3f", fg="black")
+historial.place(x=230, y=15)
+
+def devolver():
+    #borra el historial
+    inViaje.place(x=20, y=15)
+    historial.place(x=230, y=15)
+
+#boton volver
+volver=Button(abajo, text="Volver", command="devolver", bg="#466b3f", fg="black")
 
 raiz.mainloop()
