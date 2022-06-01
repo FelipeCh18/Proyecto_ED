@@ -22,6 +22,14 @@ centro=Frame()
 centro.config(width="360", height="510",bg="white")
 centro.place(x=0, y=65)
 
+#crear el mapa
+map_widget = tkintermapview.TkinterMapView(raiz, width=200, height=300, corner_radius=0)
+map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+#coordenadas del mapa
+map_widget.set_position(4.638116020576138, -74.08406346406575)
+map_widget.set_zoom(15)
+
 #para los botones
 abajo=Frame()
 abajo.config(width="360",height="65", bg="#466b3f")
