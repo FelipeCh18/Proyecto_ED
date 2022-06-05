@@ -151,8 +151,6 @@ class Historial(Cola_arreglo):
 #Entry point
 if __name__ == '__main__':
     #se instancia el historial. Solo será uno.
-    origen=int(input())
-    destino=int(input())
 
     historial_general = Historial()
 
@@ -164,6 +162,7 @@ if __name__ == '__main__':
     arbol_edificios=arbol_BST.BST()
     for i in range(len(edificios)):
         arbol_edificios.BST_insert(edificios[i].num_edificio)
+        print(edificios[i].num_edificio)
 
 
     '''viaje1 = Viaje(edificio1, edificio2)
