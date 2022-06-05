@@ -77,7 +77,7 @@ def finalizarViaje():
     marcador_destino.set_position(0,0)
 
 #logo
-foto_logo =PhotoImage(file="main/logo1.gif")
+foto_logo =PhotoImage(file="logo1.gif")
 logo=Label(arriba, image=foto_logo, bg="#466b3f")
 logo.place(x=300, y=4)
 
@@ -86,7 +86,7 @@ inViaje=Button(abajo, text="Iniciar Viaje", command=crearViaje, bg="#466b3f", fg
 inViaje.place(x=20, y=15)
 
 #Finalizar viaje
-finViaje=Button(abajo, text="Finalizr Viaje", command = finalizarViaje, bg="#466b3f", fg="black")
+finViaje=Button(abajo, text="Finalizar Viaje", command = finalizarViaje, bg="#466b3f", fg="black")
 finViaje.place(x=100, y=15)
 
 def abrirHist():

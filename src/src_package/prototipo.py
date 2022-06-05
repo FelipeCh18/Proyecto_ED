@@ -1,8 +1,12 @@
 import math as mt
 import time
 from math import acos, cos, sin, radians
+from arbol_BST import BST
 
 #Estructuras de datos
+from src.src_package import arbol_BST
+
+
 class Nodo():
     def __init__(self, dato=None, next=None):
         self.dato=dato
@@ -147,14 +151,22 @@ class Historial(Cola_arreglo):
 #Entry point
 if __name__ == '__main__':
     #se instancia el historial. Solo será uno.
+    origen=int(input())
+    destino=int(input())
+
     historial_general = Historial()
 
-    edificio1 = Edificio("Yu Takeuchi", 404, [4.637574, -74.082677])
-    edificio2 = Edificio("CyT", 454, [4.638007, -74.084678])
-    edificio3 = Edificio("León de Greiff", 104, [4.635576, -74.082589])
-    edificio4 = Edificio("Biblioteca Gabriel García Márquez", 102, [4.635416, -74.082997])
-    edificio5 = Edificio("Edificio Julio Garavito Armero - Facultad de Ingeniería", 401, [4.637304, -74.082760])
-    viaje1 = Viaje(edificio1, edificio2)
+    edificios=[Edificio("Yu Takeuchi", 404, [4.637574, -74.082677]), Edificio("CyT", 454, [4.638007, -74.084678]),
+    Edificio("León de Greiff", 104, [4.635576, -74.082589]),
+    Edificio("Biblioteca Gabriel García Márquez", 102, [4.635416, -74.082997]),
+    Edificio("Edificio Julio Garavito Armero - Facultad de Ingeniería", 401, [4.637304, -74.082760])]
+
+    arbol_edificios=arbol_BST.BST()
+    for i in range(len(edificios)):
+        arbol_edificios.BST_insert(edificios[i].num_edificio)
+
+
+    '''viaje1 = Viaje(edificio1, edificio2)
     viaje2 = Viaje(edificio2, edificio1)
     viaje3 = Viaje(edificio4, edificio2)
     viaje4 = Viaje(edificio1, edificio5)
@@ -175,6 +187,6 @@ if __name__ == '__main__':
     viaje8.hacer_viaje()
     viaje9.hacer_viaje()
     viaje10.hacer_viaje()
-    #viaje11.hacer_viaje()
+    #viaje11.hacer_viaje()'''
 
     historial_general.print_list()
