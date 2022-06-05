@@ -230,13 +230,12 @@ Edificio("Observatorio Astronómico", 413, [4.639806153566646, -74.0833615833833
 
     ori=arbol_edificios.find(origen, arbol_edificios.root)
     dest=arbol_edificios.find(destino, arbol_edificios.root)
-    print(ori.num_edificio)
-    print(dest.num_edificio)
 
+    viaje1 = Viaje(ori, dest)
+    viaje1.hacer_viaje()
+    historial_general.print_list()
 
-
-    '''viaje1 = Viaje(edificio1, edificio2)
-    viaje2 = Viaje(edificio2, edificio1)
+    '''viaje2 = Viaje(edificio2, edificio1)
     viaje3 = Viaje(edificio4, edificio2)
     viaje4 = Viaje(edificio1, edificio5)
     viaje5 = Viaje(edificio3, edificio2)
@@ -258,4 +257,3 @@ Edificio("Observatorio Astronómico", 413, [4.639806153566646, -74.0833615833833
     viaje10.hacer_viaje()
     #viaje11.hacer_viaje()'''
 
-    historial_general.print_list()
