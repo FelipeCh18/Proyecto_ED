@@ -11,18 +11,18 @@ class BST():
     def __init__(self):
         self.root = None
 
-    def BST_insert(self, dato):
-        self.root = self.insert(dato, self.root)
+    def BST_insert(self, edificio):
+        self.root = self.insert(edificio, self.root)
 
-    def insert(self, dato, nodo):
+    def insert(self, edificio, nodo):
         if nodo == None:
-            nodo = Nodo(dato)
+            nodo = Nodo(edificio)
         else:
-            if dato < nodo.dato:
-                nodo.left = self.insert(dato, nodo.left)
+            if edificio.num_edificio < nodo.dato.num_edificio:
+                nodo.left = self.insert(edificio, nodo.left)
             else:
-                if dato > nodo.dato:
-                    nodo.right = self.insert(dato, nodo.right)
+                if edificio.num_edificio > nodo.dato.num_edificio:
+                    nodo.right = self.insert(edificio, nodo.right)
                 else:
                     print("Item in tree and not inserted")
         return nodo
@@ -32,11 +32,11 @@ class BST():
 
     def remove(self, dato, nodo):
         if nodo!=None:
-            if dato<nodo.dato:
-                nodo.left=self.remove(dato, nodo.left)
+            if dato<nodo.dato.num_edificio:
+                nodo.left=self.remove(nodo.dato, nodo.left)
             else:
-                if dato>nodo.dato:
-                    nodo.right = self.remove(dato, nodo.right)
+                if dato>nodo.dato.num_edificio:
+                    nodo.right = self.remove(nodo.dato, nodo.right)
                 else:
                     if nodo.left==None and nodo.right==None:
                         nodo=None
@@ -56,3 +56,15 @@ class BST():
             while nodo.left!=None:
                 nodo=nodo.left
         return nodo
+
+    def find(self, dato, raiz):
+        if raiz.dato.num_edificio==dato:
+            return raiz.dato
+        elif raiz.dato.num_edificio>dato:
+            if raiz.left!=None:
+                return self.find(dato, raiz.left)
+        elif raiz.dato.num_edificio<dato:
+            if raiz.right!=None:
+                return self.find(dato, raiz.right)
+
+
