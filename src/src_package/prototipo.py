@@ -1,10 +1,7 @@
-import math as mt
-import time
 from math import acos, cos, sin, radians
 
 #Estructuras de datos
-from src.src_package import arbol_BST
-
+from src.src_package.estructuras import arbol_BST
 
 class Nodo():
     def __init__(self, dato=None, next=None):
@@ -49,42 +46,6 @@ class Cola_nodo():
         while node != None:
             print(node.dato)
             node = node.next
-
-class Cola_arreglo:
-    def __init__(self):
-        self.count = 0
-        self.arr = []
-        self.size = 10 #este atributo se debe cambiar con cada implementación
-        self.top = 0
-        self.tail = 0
-    
-    def enqueue(self,data):
-        if self.full() is False:
-            self.arr.append(data)
-            self.count+=1
-            self.tail = (self.tail+1)%self.size
-        else: #este else se debe cambiar con cada implementación
-            self.dequeue()
-            self.enqueue(data)
-    
-    def dequeue(self):
-        if self.empty() is False:
-            self.arr.remove(self.arr[0])
-            self.count-=1
-            self.top = (self.top+1)%self.size
-        else:
-            print('Cola vacia')
-    
-    def empty(self):
-        return self.count == 0
-    
-    def full(self):
-        return self.count >= self.size
-    
-    #este método se modificó del original
-    def output(self):
-        for elemento in self.arr:
-            print(elemento)
 
 #clases
 class Edificio():
@@ -223,7 +184,7 @@ if __name__ == '__main__':
                 Edificio("Edificio Yu Takeuchi - Departamentos de Matemáticas, Física y Estadística", 404, [4.637574, -74.082677]),
                 Edificio("Observatorio Astronómico", 413, [4.639806153566646, -74.08336158338332])]
 
-    arbol_edificios=arbol_BST.BST()
+    arbol_edificios= arbol_BST.BST()
     for i in range(len(edificios)):
         arbol_edificios.BST_insert(edificios[i])
 
