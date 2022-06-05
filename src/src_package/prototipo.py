@@ -226,7 +226,6 @@ if __name__ == '__main__':
     arbol_edificios=arbol_BST.BST()
     for i in range(len(edificios)):
         arbol_edificios.BST_insert(edificios[i])
-        print(edificios[i].num_edificio)
 
     ori=arbol_edificios.find(origen, arbol_edificios.root)
     dest=arbol_edificios.find(destino, arbol_edificios.root)
