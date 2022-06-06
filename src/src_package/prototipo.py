@@ -132,7 +132,6 @@ if __name__ == '__main__':
                 Edificio("Facultad de Medicina", 471, [4.6364119300590705, -74.08442889603137]),
                 Edificio("Departamento de Lenguas Extranjeras", 229, [4.632726658071325, -74.08451861259083]),
                 Edificio("Portería Peatonal Calle 26", 235, [4.632525465261985, -74.08392775782852]),
-                Edificio("Subestación Eléctrica Calle 26", 236, []),
                 Edificio("Canchas de Tenis T-2, T-3 y T-4", 414, [4.639525444501469, -74.08367406073157]),
                 Edificio("Laboratorio de Ensayos Hidráulicos", 408, [4.63821149349025, -74.08149173609216]),
                 Edificio("Parque Automotor", 436, [4.641669240925287, -74.08348313898786]),
@@ -140,8 +139,6 @@ if __name__ == '__main__':
                 Edificio("Edificio Antonio Nariño - Departamento de Lingüistica. Departamento de Ingeniería Civil y Agrícola.", 214, [4.633455840055661, -74.084017710065]),
                 Edificio("Facultad de Enfermería (Nuevo)", 228, [4.635232340842952, -74.08494106051288]),
                 Edificio("Restaurante 'Campus' de Ciencias Humanas", 213, [4.633767964486836, -74.08430738863912]),
-                Edificio("Programa Recreo", 432, []),
-                Edificio("Subestación Eléctrica", 472, []),
                 Edificio("León de Greiff", 104, [4.635679915166562, -74.08233173656821]),
                 Edificio("Torre de Enfermería", 101, [4.635168159913767, -74.08241720288407]),
                 Edificio("Centro de Acopio de Residuos Sólidos", 437, [4.641302342792041, -74.08397457887394]),
@@ -149,7 +146,6 @@ if __name__ == '__main__':
                 Edificio("Instituto de Extensión e Investigación - IEI", 406, [4.638256683909461, -74.08243470824875]),
                 Edificio("Escuela de Artes Plásticas", 301, [4.6363116622260225, -74.08221569333892]),
                 Edificio("Facultad de Odontología", 210, [4.634559664993099, -74.08522267343369]),
-                Edificio("Playa de Modelos", 410, []),
                 Edificio("Perrera", 473, [4.63521513758165, -74.08591928063423]),
                 Edificio("Instituto de Genética", 426, [4.642876013587281, -74.08300595643392]),
                 Edificio("Portería Acceso Vehicular Capilla", 252, [4.632485465444149, -74.08164199400272]),
@@ -168,8 +164,6 @@ if __name__ == '__main__':
                 Edificio("Postgrados en Bioquímica y Carbones", 452, [4.63711771576264, -74.08447985800483]),
                 Edificio("Postgrados en Matemáticas y Física", 405, [4.637758348985364, -74.08172452460337]),
                 Edificio("Laboratorio de Hidráulica", 409, [4.638559056536617, -74.0817897627584]),
-                Edificio("Caseta de comestibles", 403, []),
-                Edificio("Talleres y Gestiones de Mantenimiento", 438, []),
                 Edificio("Portería Salida Vehicular Capilla", 253, [4.633450579117872, -74.08073540735573]),
                 Edificio("Edificio Julio Garavito Armero - Facultad de Ingeniería", 401, [4.637304, -74.082760]),
                 Edificio("Laboratorios de Ingeniería", 411, [4.639156512406468, -74.08260117712538]),
@@ -186,9 +180,11 @@ if __name__ == '__main__':
     
     Edificios_Nombre = []
     Edificios_Numero = []
+
     for i in edificios:
         Edificios_Nombre.append(unicodedata.normalize('NFKD', i.nombre_edificio).encode('ASCII', 'ignore').lower())
         Edificios_Numero.append(str(i.num_edificio))
+
     arbol_edificios= arbol_BST.BST()
     for i in range(len(edificios)):
         arbol_edificios.BST_insert(edificios[i])
