@@ -100,7 +100,9 @@ class Historial(Cola_nodo):
     def __init__(self):
         Cola_nodo.__init__(self)
 
-#se instancia el historial. Solo será uno.
+# se instancia el historial. Solo será uno.
+historial_general = Historial()
+
 edificios = [Edificio("Departamento de Farmacia", 450, [4.6372861417941635, -74.0834874406681]),
              Edificio("Departamento de Química", 451, [4.637764685367428, -74.0835330382217]),
              Edificio("Talleres de Mantenimiento", 435, [4.64205482639357, -74.08360455507342]),
