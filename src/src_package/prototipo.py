@@ -183,7 +183,12 @@ if __name__ == '__main__':
                 Edificio("Filosofía", 239, [4.6323455717377335, -74.08331072877552]),
                 Edificio("Edificio Yu Takeuchi - Departamentos de Matemáticas, Física y Estadística", 404, [4.637574, -74.082677]),
                 Edificio("Observatorio Astronómico", 413, [4.639806153566646, -74.08336158338332])]
-
+    
+    Edificios_Nombre = []
+    Edificios_Numero = []
+    for i in edificios:
+        Edificios_Nombre.append(unicodedata.normalize('NFKD', i.nombre_edificio).encode('ASCII', 'ignore').lower())
+        Edificios_Numero.append(str(i.num_edificio))
     arbol_edificios= arbol_BST.BST()
     for i in range(len(edificios)):
         arbol_edificios.BST_insert(edificios[i])
