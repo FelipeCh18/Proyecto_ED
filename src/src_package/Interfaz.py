@@ -38,7 +38,6 @@ welcome.place(x=0, y=220)
 
 #crear el mapa
 map_widget = tkintermapview.TkinterMapView(raiz, width=250, height=350, corner_radius=0)
-map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 #coordenadas del mapa
 map_widget.set_position(4.638116020576138, -74.08406346406575)
@@ -64,6 +63,9 @@ entrada2.place(x=100, y=35)
 
 #Extrae info y la retorna
 def crearViaje():
+    map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
+    welcome.destroy()
+    
     desde=origen.get()
     hasta=destino.get()
     
