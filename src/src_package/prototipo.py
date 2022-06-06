@@ -1,6 +1,8 @@
 from math import acos, cos, sin, radians
 
 #Estructuras de datos
+import unicodedata
+
 from src.src_package.estructuras import arbol_BST
 
 class Nodo():
