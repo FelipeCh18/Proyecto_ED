@@ -5,12 +5,10 @@ import unicodedata
 
 from src.src_package.estructuras import arbol_BST
 
-
 class Nodo():
     def __init__(self, dato=None, next=None):
         self.dato = dato
         self.next = next
-
 
 class Cola_nodo():
     def __init__(self):
@@ -49,14 +47,12 @@ class Cola_nodo():
             print(node.dato)
             node = node.next
 
-
 # clases
 class Edificio():
     def __init__(self, nombre_edificio=None, num_edificio=None, coordenadas=None):
         self.nombre_edificio = nombre_edificio
         self.num_edificio = num_edificio
         self.coordenadas = coordenadas
-
 
 class Viaje():
     # constructor de la clase. Recibe como parámetros el origen y el destino del viaje.
@@ -99,23 +95,12 @@ class Viaje():
                 min_distancia = viajes[i][2]
         return min_distancia
 
-
 # clase historial. Hereda de cola_nodo
 class Historial(Cola_nodo):
     def __init__(self):
         Cola_nodo.__init__(self)
 
-
-# clase historial. Hereda de cola_arreglo (falta sobreescribir los métodos originales de cola_arreglo de acuerdo con las necesidades propias del historial [tamaño, dequeue/enqueue])
-"""
-class Historial(Cola_arreglo):
-    def __init__(self):
-        Cola_arreglo.__init__(self)"""
-
-# se instancia el historial. Solo será uno.
-
-historial_general = Historial()
-
+#se instancia el historial. Solo será uno.
 edificios = [Edificio("Departamento de Farmacia", 450, [4.6372861417941635, -74.0834874406681]),
              Edificio("Departamento de Química", 451, [4.637764685367428, -74.0835330382217]),
              Edificio("Talleres de Mantenimiento", 435, [4.64205482639357, -74.08360455507342]),
@@ -198,13 +183,6 @@ for i in edificios:
 arbol_edificios = arbol_BST.BST()
 for i in range(len(edificios)):
     arbol_edificios.BST_insert(edificios[i])
-
-ori = arbol_edificios.find(origen, arbol_edificios.root)
-dest = arbol_edificios.find(destino, arbol_edificios.root)
-
-viaje1 = Viaje(ori, dest)
-viaje1.hacer_viaje()
-historial_general.print_list()
 
 '''viaje2 = Viaje(edificio2, edificio1)
 viaje3 = Viaje(edificio4, edificio2)
