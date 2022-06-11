@@ -88,8 +88,11 @@ def crearViaje():
         marcador_destino.set_text(hasta.upper())
 
         # buscar la informacion en el arbol BST
+        inicio=time()
         ori = arbol_edificios.find(desde_ubicacion.num_edificio, arbol_edificios.root)
         dest = arbol_edificios.find(hasta_ubicacion.num_edificio, arbol_edificios.root)
+        fin = time() - inicio
+        print(fin)
 
         # calcular distancia entre puntos
         viaje1 = Viaje(ori, dest)
