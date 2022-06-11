@@ -1,3 +1,4 @@
+from time import time
 from math import acos, cos, sin, radians
 
 # Estructuras de datos
@@ -182,28 +183,9 @@ for i in edificios:
     Edificios_Nombre.append(unicodedata.normalize('NFKD', i.nombre_edificio).encode('ASCII', 'ignore').lower())
     Edificios_Numero.append(str(i.num_edificio))
 
+inicio1=time()
 arbol_edificios = arbol_BST.BST()
 for i in range(len(edificios)):
     arbol_edificios.BST_insert(edificios[i])
-
-'''viaje2 = Viaje(edificio2, edificio1)
-viaje3 = Viaje(edificio4, edificio2)
-viaje4 = Viaje(edificio1, edificio5)
-viaje5 = Viaje(edificio3, edificio2)
-viaje6 = Viaje(edificio1, edificio3)
-viaje7 = Viaje(edificio5, edificio4)
-viaje8 = Viaje(edificio1, edificio3)
-viaje9 = Viaje(edificio4, edificio2)
-viaje10 = Viaje(edificio5, edificio3)
-#viaje10 = Viaje(edificio4, edificio1)
-viaje1.hacer_viaje()
-viaje2.hacer_viaje()
-viaje3.hacer_viaje()
-viaje4.hacer_viaje()
-viaje5.hacer_viaje()
-viaje6.hacer_viaje()
-viaje7.hacer_viaje()
-viaje8.hacer_viaje()
-viaje9.hacer_viaje()
-viaje10.hacer_viaje()
-#viaje11.hacer_viaje()'''
+fin1=time()-inicio1
+print(fin1)
