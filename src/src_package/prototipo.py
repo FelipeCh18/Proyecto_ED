@@ -1,10 +1,12 @@
 from time import time
 from math import acos, cos, sin, radians
+from turtle import clear
 
 # Estructuras de datos
 import unicodedata
 
-from src.src_package.estructuras import arbol_BST
+from estructuras import arbol_BST
+from estructuras import Grafos
 
 class Nodo():
     def __init__(self, dato=None, next=None):
@@ -62,7 +64,7 @@ class Viaje():
         self.destino = destino
 
     # método que calcula la distancia entre dos puntos a partir de las coordenadas (latitud, longitud)
-    def distancia_puntos(self):
+    def distancia_puntos(self, origen, destino):
         origen = (radians(self.origen.coordenadas[0]), radians(self.origen.coordenadas[1]))
         destino = (radians(self.destino.coordenadas[0]), radians(self.destino.coordenadas[1]))
         distancia = acos(
@@ -96,7 +98,9 @@ class Viaje():
                 min_distancia = viajes[i][2]
         return min_distancia
 
-# clase historial. Hereda de cola_nodo
+
+
+# clase historial. Hereda de cola_nodo    
 class Historial(Cola_nodo):
     def __init__(self):
         Cola_nodo.__init__(self)
@@ -200,9 +204,55 @@ for i in edificios:
     Edificios_Nombre.append(unicodedata.normalize('NFKD', i.nombre_edificio).encode('ASCII', 'ignore').lower())
     Edificios_Numero.append(str(i.num_edificio))
 
-inicio1=time()
-arbol_edificios = arbol_BST.BST()
-for i in range(len(edificios)):
-    arbol_edificios.BST_insert(edificios[i])
-fin1=time()-inicio1
-print(fin1)
+#inicio1=time()
+#arbol_edificios = arbol_BST.BST()
+#for i in range(len(edificios)):
+#    arbol_edificios.BST_insert(edificios[i])
+#fin1=time()-inicio1
+#print(fin1)
+def distancia_puntos(lat1,lon1,lat2,lon2):
+        inicio = (radians(lat1), radians(lon1))
+        final = (radians(lat2), radians(lon2))
+        distancia = acos(
+            sin(inicio[0]) * sin(final[0]) + cos(inicio[0]) * cos(final[0]) * cos(inicio[1] - final[1]))
+        return round(distancia * 6371.01 * 1000, 2)  # retorna distancia en metros
+
+Grafosun = Grafos.Graph()
+Grafosun.add_vertex(edificios[0].num_edificio)
+Grafosun.add_vertex(edificios[1].num_edificio)
+Grafosun.add_vertex(edificios[2].num_edificio)
+Grafosun.add_vertex(edificios[3].num_edificio)
+Grafosun.add_vertex(edificios[4].num_edificio)
+Grafosun.add_vertex(edificios[5].num_edificio)
+Grafosun.add_vertex(edificios[6].num_edificio)
+Grafosun.add_vertex(edificios[7].num_edificio)
+Grafosun.add_vertex(edificios[8].num_edificio)
+Grafosun.add_vertex(edificios[9].num_edificio)
+Grafosun.add_vertex(edificios[10].num_edificio)
+Grafosun.add_vertex(edificios[11].num_edificio)
+
+Grafosun.add_edge(edificios[0].num_edificio, edificios[1].num_edificio,distancia_puntos(edificios[0].coordenadas[0],edificios[0].coordenadas[1], edificios[1].coordenadas[0],edificios[1].coordenadas[1]))
+Grafosun.add_edge(edificios[0].num_edificio, edificios[2].num_edificio,distancia_puntos(edificios[0].coordenadas[0],edificios[0].coordenadas[1], edificios[2].coordenadas[0],edificios[2].coordenadas[1]))
+Grafosun.add_edge(edificios[1].num_edificio, edificios[3].num_edificio,distancia_puntos(edificios[1].coordenadas[0],edificios[1].coordenadas[1], edificios[3].coordenadas[0],edificios[3].coordenadas[1]))
+Grafosun.add_edge(edificios[2].num_edificio, edificios[4].num_edificio,distancia_puntos(edificios[2].coordenadas[0],edificios[2].coordenadas[1], edificios[4].coordenadas[0],edificios[4].coordenadas[1]))
+Grafosun.add_edge(edificios[3].num_edificio, edificios[5].num_edificio,distancia_puntos(edificios[3].coordenadas[0],edificios[3].coordenadas[1], edificios[5].coordenadas[0],edificios[5].coordenadas[1]))
+Grafosun.add_edge(edificios[4].num_edificio, edificios[6].num_edificio,distancia_puntos(edificios[4].coordenadas[0],edificios[4].coordenadas[1], edificios[6].coordenadas[0],edificios[6].coordenadas[1]))
+Grafosun.add_edge(edificios[5].num_edificio, edificios[7].num_edificio,distancia_puntos(edificios[5].coordenadas[0],edificios[5].coordenadas[1], edificios[7].coordenadas[0],edificios[7].coordenadas[1]))
+Grafosun.add_edge(edificios[6].num_edificio, edificios[8].num_edificio,distancia_puntos(edificios[6].coordenadas[0],edificios[6].coordenadas[1], edificios[8].coordenadas[0],edificios[8].coordenadas[1]))
+Grafosun.add_edge(edificios[7].num_edificio, edificios[9].num_edificio,distancia_puntos(edificios[7].coordenadas[0],edificios[7].coordenadas[1], edificios[9].coordenadas[0],edificios[9].coordenadas[1]))
+Grafosun.add_edge(edificios[8].num_edificio, edificios[10].num_edificio,distancia_puntos(edificios[8].coordenadas[0],edificios[8].coordenadas[1], edificios[10].coordenadas[0],edificios[10].coordenadas[1]))
+Grafosun.add_edge(edificios[9].num_edificio, edificios[11].num_edificio,distancia_puntos(edificios[9].coordenadas[0],edificios[9].coordenadas[1], edificios[11].coordenadas[0],edificios[11].coordenadas[1]))
+Grafosun.add_edge(edificios[10].num_edificio, edificios[11].num_edificio,distancia_puntos(edificios[10].coordenadas[0],edificios[10].coordenadas[1], edificios[11].coordenadas[0],edificios[11].coordenadas[1]))
+
+#Grafos.dijkstra(Grafosun, Grafosun.get_vertex(404), Grafosun.get_vertex(434)) 
+#target = Grafosun.get_vertex(434)
+#path = [target.get_id()]
+#Grafos.shortest(target, path)
+#print ('The shortest path : %s' %(path[::-1]))
+print(Grafosun.get_vertex(434))
+print ('Graph data:')
+for v in Grafosun:
+        for w in v.get_connections():
+            vid = v.get_id()
+            wid = w.get_id()
+            print ('( %s , %s, %3d)'  % ( vid, wid, v.get_weight(w)))
