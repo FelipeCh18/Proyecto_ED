@@ -2,12 +2,17 @@ from tkinter import *
 from tkinter import messagebox
 import time
 from tkinter.ttk import Notebook
+from cv2 import getVersionMajor
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import tkintermapview
 import unicodedata
 from prototipo import *
-from prototipo import edificios as info_ubicacion, Edificios_Nombre as info_nombre, Edificios_Numero as info_num
+from prototipo import Edificios2 as info_ubicacion, Edificios_Nombre as info_nombre, Edificios_Numero as info_num
+from estructuras.Grafos import dijkstra, shortest
+from prototipo import dijkstra
+from prototipo import distancia_puntos, Viaje, historial_general, Ed_Num
+from dijkstra import Graph, dijkstra
 
 raiz = Tk()
 raiz.title("MovilizateUN")
@@ -47,6 +52,7 @@ map_widget.set_zoom(15)
 # crear marcadores
 marcador_origen = map_widget.set_marker(0, 0)
 marcador_destino = map_widget.set_marker(0, 0)
+path1 = map_widget.set_path([marcador_origen.position, marcador_origen.position])
 
 # Entradas
 origen = StringVar()
@@ -65,6 +71,7 @@ entrada2.place(x=100, y=35)
 
 # Extrae info y la retorna
 def crearViaje():
+    global desde, hasta, dato_inicio, dato_fin
     map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
     welcome.destroy()
 
@@ -72,50 +79,84 @@ def crearViaje():
     hasta = destino.get()
 
     desde = origen.get()
+    print(info_num[1])
     desde = unicodedata.normalize('NFKD', str(desde)).encode('ASCII', 'ignore').lower()
     hasta = destino.get()
     hasta = unicodedata.normalize('NFKD', str(hasta)).encode('ASCII', 'ignore').lower()
     # comprobar si los datos ingresados existen
-    if (desde in info_nombre and hasta in info_nombre) or (desde in info_num and hasta in info_num):
+    if desde in info_nombre and hasta in info_nombre:
 
         desde_ubicacion = info_ubicacion[info_nombre.index(desde)]
-
-        marcador_origen.set_position(desde_ubicacion.coordenadas[0], desde_ubicacion.coordenadas[1])
-        marcador_origen.set_text(desde.upper())
-
+        dato_inicio = Ed_Num[info_nombre.index(desde)]
         hasta_ubicacion = info_ubicacion[info_nombre.index(hasta)]
-        marcador_destino.set_position(hasta_ubicacion.coordenadas[0], hasta_ubicacion.coordenadas[1])
-        marcador_destino.set_text(hasta.upper())
+
+        comprobarIngreso(desde_ubicacion, hasta_ubicacion)
+
 
         # buscar la informacion en el arbol BST
         inicio=time()
+       
         ori = arbol_edificios.find(desde_ubicacion.num_edificio, arbol_edificios.root)
         dest = arbol_edificios.find(hasta_ubicacion.num_edificio, arbol_edificios.root)
         fin = time() - inicio
         print(fin)
-
+      
         # calcular distancia entre puntos
+        
         viaje1 = Viaje(ori, dest)
         viaje1.hacer_viaje()
         historial_general.print_list()
+       
 
-        # mostrar la distancia en pantalla
-        # distancia = Label(text = str(viaje1.hacer_viaje()), font="Candara, 20",bg='white', fg="black")
-        # distancia.place(x=100, y=220)
+    elif desde in info_num and hasta in info_num:
+
+        desde_ubicacion = info_ubicacion[info_num.index(desde)]
+        dato_inicio = Ed_Num[info_num.index(desde)]
+        hasta_ubicacion = info_ubicacion[info_num.index(hasta)]
+        dato_fin = Ed_Num[info_num.index(hasta)]
+        comprobarIngreso(desde_ubicacion, hasta_ubicacion)
     else:
         print(messagebox.showinfo(message='Ingrese un edificio valido', title='Edificio no encontrado'))
 
     return desde, hasta
 
+def comprobarIngreso(desde_ubicacion, hasta_ubicacion):
+    global desde, hasta, path1
+    marcador_origen.set_position(desde_ubicacion.coordenadas[0], desde_ubicacion.coordenadas[1])
+    marcador_origen.set_text(desde.upper())
+    
+    marcador_destino.set_position(hasta_ubicacion.coordenadas[0], hasta_ubicacion.coordenadas[1])
+    marcador_destino.set_text(hasta.upper())
+    print(dato_inicio)
+    mapa = Graph(1000)
+    for i in range(1000):
+        for j in range(1000):
+            if i == dato_inicio and j in Ed_Num:
+                distancia = Viaje(info_ubicacion[Ed_Num.index(i)], info_ubicacion[Ed_Num.index(j)])
+                try:
+                    if distancia.distancia_puntos() < 150.00:
+                        mapa.add_edge(Ed_Num[Ed_Num.index(i)],Ed_Num[Ed_Num.index(j)], distancia.distancia_puntos())
+                except:
+                    pass
+    D = dijkstra(mapa, dato_inicio)
+    print(mapa.visited)
+    for i in range(len(mapa.visited)):
+        point = marcador_origen.position
+        if 0< i < len(mapa.visited)-1:
+            if distancia_puntos(marcador_origen.position[0],  info_ubicacion[Ed_Num.index(mapa.visited[i])].coordenadas[0], marcador_origen.position[1], info_ubicacion[Ed_Num.index(mapa.visited[i])].coordenadas[1]) < distancia_puntos(marcador_origen.position[0],  marcador_destino.position[0], marcador_origen.position[1], marcador_destino.position[1]) and distancia_puntos(marcador_destino.position[0],  info_ubicacion[Ed_Num.index(mapa.visited[i])].coordenadas[0], marcador_destino.position[1], info_ubicacion[Ed_Num.index(mapa.visited[i])].coordenadas[1]) < distancia_puntos(marcador_origen.position[0],  marcador_destino.position[0], marcador_origen.position[1], marcador_destino.position[1]):
+                point = info_ubicacion[Ed_Num.index(mapa.visited[i])].coordenadas
+        path1 = map_widget.set_path([marcador_origen.position, point, marcador_destino.position])
 
 # Eliminar marcadores
 def finalizarViaje():
+    global path1
     marcador_origen.set_position(0, 0)
     marcador_destino.set_position(0, 0)
+    path1.delete()
 
 
 # logo
-foto_logo = PhotoImage(file="logo1.gif")
+foto_logo = PhotoImage(file="src/src_package/logo1.gif")
 logo = Label(arriba, image=foto_logo, bg="#466b3f")
 logo.place(x=300, y=4)
 

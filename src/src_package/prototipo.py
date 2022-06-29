@@ -7,6 +7,8 @@ import unicodedata
 
 from estructuras import arbol_BST
 from estructuras import Grafos
+from estructuras.Grafos import dijkstra, shortest
+from estructuras.Grafos import dijkstra_algorithm
 
 class Nodo():
     def __init__(self, dato=None, next=None):
@@ -64,7 +66,7 @@ class Viaje():
         self.destino = destino
 
     # método que calcula la distancia entre dos puntos a partir de las coordenadas (latitud, longitud)
-    def distancia_puntos(self, origen, destino):
+    def distancia_puntos(self):
         origen = (radians(self.origen.coordenadas[0]), radians(self.origen.coordenadas[1]))
         destino = (radians(self.destino.coordenadas[0]), radians(self.destino.coordenadas[1]))
         distancia = acos(
@@ -97,8 +99,6 @@ class Viaje():
             if viajes[i][2] < min_distancia:
                 min_distancia = viajes[i][2]
         return min_distancia
-
-
 
 # clase historial. Hereda de cola_nodo    
 class Historial(Cola_nodo):
@@ -199,15 +199,31 @@ Edificio("Patología Aviar, Gallinero y Perrera", 504, [4.634075088678774, -74.0
 
 Edificios_Nombre = []
 Edificios_Numero = []
+Ed_Num = []
+Edificios_coordenadas = []
 
 for i in edificios:
+    Edificios_coordenadas.append(i.coordenadas[0])
+
+Edificios2 = []
+Edificios_coordenadas.sort()
+
+
+
+for i in range(len(edificios)):
+    for j in range(len(Edificios_coordenadas)):
+        if edificios[j].coordenadas[0] == Edificios_coordenadas[i]:
+            Edificios2.append(edificios[j])
+
+for i in Edificios2:
     Edificios_Nombre.append(unicodedata.normalize('NFKD', i.nombre_edificio).encode('ASCII', 'ignore').lower())
-    Edificios_Numero.append(str(i.num_edificio))
+    Edificios_Numero.append(unicodedata.normalize('NFKD', str(i.num_edificio)).encode('ASCII', 'ignore').lower())
+    Ed_Num.append(i.num_edificio)
 
 #inicio1=time()
-#arbol_edificios = arbol_BST.BST()
-#for i in range(len(edificios)):
-#    arbol_edificios.BST_insert(edificios[i])
+arbol_edificios = arbol_BST.BST()
+for i in range(len(edificios)):
+    arbol_edificios.BST_insert(edificios[i])
 #fin1=time()-inicio1
 #print(fin1)
 def distancia_puntos(lat1,lon1,lat2,lon2):
@@ -218,18 +234,8 @@ def distancia_puntos(lat1,lon1,lat2,lon2):
         return round(distancia * 6371.01 * 1000, 2)  # retorna distancia en metros
 
 Grafosun = Grafos.Graph()
-Grafosun.add_vertex(edificios[0].num_edificio)
-Grafosun.add_vertex(edificios[1].num_edificio)
-Grafosun.add_vertex(edificios[2].num_edificio)
-Grafosun.add_vertex(edificios[3].num_edificio)
-Grafosun.add_vertex(edificios[4].num_edificio)
-Grafosun.add_vertex(edificios[5].num_edificio)
-Grafosun.add_vertex(edificios[6].num_edificio)
-Grafosun.add_vertex(edificios[7].num_edificio)
-Grafosun.add_vertex(edificios[8].num_edificio)
-Grafosun.add_vertex(edificios[9].num_edificio)
-Grafosun.add_vertex(edificios[10].num_edificio)
-Grafosun.add_vertex(edificios[11].num_edificio)
+for i in range(len(edificios)):
+    Grafosun.add_vertex(edificios[i].num_edificio)
 
 Grafosun.add_edge(edificios[0].num_edificio, edificios[1].num_edificio,distancia_puntos(edificios[0].coordenadas[0],edificios[0].coordenadas[1], edificios[1].coordenadas[0],edificios[1].coordenadas[1]))
 Grafosun.add_edge(edificios[0].num_edificio, edificios[2].num_edificio,distancia_puntos(edificios[0].coordenadas[0],edificios[0].coordenadas[1], edificios[2].coordenadas[0],edificios[2].coordenadas[1]))
@@ -244,15 +250,11 @@ Grafosun.add_edge(edificios[8].num_edificio, edificios[10].num_edificio,distanci
 Grafosun.add_edge(edificios[9].num_edificio, edificios[11].num_edificio,distancia_puntos(edificios[9].coordenadas[0],edificios[9].coordenadas[1], edificios[11].coordenadas[0],edificios[11].coordenadas[1]))
 Grafosun.add_edge(edificios[10].num_edificio, edificios[11].num_edificio,distancia_puntos(edificios[10].coordenadas[0],edificios[10].coordenadas[1], edificios[11].coordenadas[0],edificios[11].coordenadas[1]))
 
-#Grafos.dijkstra(Grafosun, Grafosun.get_vertex(404), Grafosun.get_vertex(434)) 
-#target = Grafosun.get_vertex(434)
-#path = [target.get_id()]
-#Grafos.shortest(target, path)
-#print ('The shortest path : %s' %(path[::-1]))
-print(Grafosun.get_vertex(434))
-print ('Graph data:')
-for v in Grafosun:
-        for w in v.get_connections():
-            vid = v.get_id()
-            wid = w.get_id()
-            print ('( %s , %s, %3d)'  % ( vid, wid, v.get_weight(w)))
+#print(dijkstra_algorithm(Grafosun, Grafosun.get_vertex(404)))
+
+for i in Edificios2:
+    print(i.num_edificio)
+
+
+#path = Grafos.shortest(target, path)
+#print(path)
